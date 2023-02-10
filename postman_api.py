@@ -16,7 +16,7 @@ while True:
     with open("request_log.txt", "a") as log_file:
         response = requests.post(url, json=data)
         count += 1
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         if response.status_code == 200:
             log_message = str(count) + " - " + current_time + " - Successful\n"
             log_file.write(log_message)

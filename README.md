@@ -2,4 +2,4 @@
 
 To start automation testing
 
-# run run_test.bat
+# run_test.bat

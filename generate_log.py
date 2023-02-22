@@ -1,4 +1,5 @@
 import re
+import datetime
 import openpyxl
 from openpyxl.utils import get_column_letter
 
@@ -32,8 +33,8 @@ for i in range(1, 12):
         ws.column_dimensions[get_column_letter(i)].width = 20
 
 
-upgraded_list = re.findall(r"ROLL BACK Completed", text)
-src_flag_list = re.findall(r"Source_Flag:(.*)", text)
+upgraded_list = re.findall(r"Upgraded", text)
+src_flag_list = re.findall(r"0xffffffff", text)
 ldr_flag_list = re.findall(r"Loader_Flag : (.*)", text)
 ver_list = re.findall(r"ver 1\.0|ver 1\.1", text)
 api_message_list = re.findall(r"api message...: (start_update code: 81)", text)
@@ -77,4 +78,5 @@ for i in range(max_len):
     ws.cell(row=row, column=2, value=test_count_list[i] if i < len(test_count_list) else '')
     ws.cell(row=row, column=3, value=test_time_list[i] if i < len(test_time_list) else '')
 
-wb.save("log_report.xlsx")
+current_date = datetime.datetime.now().strftime('%b_%d')
+wb.save(f"log_report_{current_date}.xlsx")

@@ -32,15 +32,14 @@ for i in range(1, 12):
     else:
         ws.column_dimensions[get_column_letter(i)].width = 20
 
-
 upgraded_list = re.findall(r"Upgraded", text)
-src_flag_list = re.findall(r"0xffffffff", text)
+src_flag_list = re.findall(r"Source_flag:(.*)", text)
 ldr_flag_list = re.findall(r"Loader_Flag : (.*)", text)
 ver_list = re.findall(r"ver 1\.0|ver 1\.1", text)
 api_message_list = re.findall(r"api message...: (start_update code: 81)", text)
-wdt_control_list = re.findall(r"WDT register state (.*)", text)
-wdt_rst_list = re.findall(r"WDT RSTCNT:(.*)", text)
-wdt_alt_list = re.findall(r"WDT ALT:(.*)", text)
+wdt_control_list = re.findall(r"CTL:(.*)", text)
+wdt_alt_list = re.findall(r"ALTCTL:(.*)", text)
+wdt_rst_list = re.findall(r"RSTCNT:(.*)", text)
 
 test_count_list = re.findall(r"^(\d+)", request_text, re.MULTILINE)
 test_time_list = re.findall(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", request_text)
@@ -56,11 +55,12 @@ wdt_rst_len = len(wdt_rst_list)
 test_time_len = len(test_time_list)
 test_count_len = len(test_time_list)
 
-lists = [ver_list, wdt_control_list, wdt_alt_list, ldr_flag_list, wdt_rst_list, api_message_list, test_count_list, test_time_list]
-max_len = max(len(l) for l in lists)
+lists = [ver_list, wdt_control_list, wdt_alt_list, ldr_flag_list, wdt_rst_list, api_message_list, test_count_list,
+         test_time_list]
+max_len = max(len(lis) for lis in lists)
 
 for i in range(max_len):
-    row = (i + 1) * 4
+    row = (i + 1) * 3
     ws.cell(row=row, column=1, value=i + 1)
     ws.cell(row=row, column=5, value=ver_list[i] if i < len(ver_list) else '')
     ws.cell(row=row, column=6, value=wdt_control_list[i] if i < len(wdt_control_list) else '')
